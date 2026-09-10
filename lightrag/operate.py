@@ -3021,6 +3021,7 @@ async def merge_nodes_and_edges(
             ):
                 try:
                     logger.debug(f"Processing entity {entity_name}")
+                    await asyncio.sleep(0.2)
                     entity_data = await _merge_nodes_then_upsert(
                         entity_name,
                         entities,

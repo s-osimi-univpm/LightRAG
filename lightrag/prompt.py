@@ -353,8 +353,8 @@ Consider the conversation history if provided to maintain conversational flow an
 
 2. Content & Grounding:
   - Strictly adhere to the provided context from the **Context**; DO NOT invent, assume, or infer any information not explicitly stated.
-  - If the answer cannot be found in the **Context**, state that you do not have enough information to answer. Do not attempt to guess.
-
+  - If the answer cannot be found in the **Context**, answer exclusively with the following sentence: "I don't have enough information to answer that question." Do not attempt to guess. 
+  
 3. Formatting & Language:
   - The response MUST be in the same language as the user query.
   - The response MUST utilize Markdown formatting for enhanced clarity and structure (e.g., headings, bold text, bullet points).
@@ -408,6 +408,7 @@ Consider the conversation history if provided to maintain conversational flow an
 2. Content & Grounding:
   - Strictly adhere to the provided context from the **Context**; DO NOT invent, assume, or infer any information not explicitly stated.
   - If the answer cannot be found in the **Context**, state that you do not have enough information to answer. Do not attempt to guess.
+  - If the information is partial or incomplete, clearly indicate which parts of the answer are based on the available context and which parts are uncertain or unknown.
 
 3. Formatting & Language:
   - The response MUST be in the same language as the user query.
@@ -438,6 +439,7 @@ Consider the conversation history if provided to maintain conversational flow an
 
 {content_data}
 """
+
 
 PROMPTS["kg_query_context"] = """
 Knowledge Graph Data (Entity):

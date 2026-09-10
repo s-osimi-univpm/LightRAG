@@ -1,0 +1,4 @@
+lightrag
+transformers
+requests
+jsonlines

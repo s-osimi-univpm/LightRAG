@@ -49,7 +49,7 @@ DEFAULT_HEADING_LEVEL_MAX_CHARS = 80
 GRAPH_FIELD_SEP = "<SEP>"
 
 # Query and retrieval configuration defaults
-DEFAULT_TOP_K = 40
+DEFAULT_TOP_K = 40 # Default KG top entity and relation retrieval number
 DEFAULT_CHUNK_TOP_K = 20
 DEFAULT_MAX_ENTITY_TOKENS = 6000
 DEFAULT_MAX_RELATION_TOKENS = 8000
@@ -385,8 +385,8 @@ DEFAULT_MM_CHUNK_DESCRIPTION_MIN_TOKENS = 100
 DEFAULT_MM_IMAGE_MIN_PIXEL = 64
 
 # Embedding configuration defaults
-DEFAULT_EMBEDDING_FUNC_MAX_ASYNC = 8  # Default max async for embedding functions
-DEFAULT_EMBEDDING_BATCH_NUM = 10  # Default batch size for embedding computations
+DEFAULT_EMBEDDING_FUNC_MAX_ASYNC = 4  # Default max async for embedding functions
+DEFAULT_EMBEDDING_BATCH_NUM = 4  # Default batch size for embedding computations
 
 # Gunicorn worker timeout
 DEFAULT_TIMEOUT = 300

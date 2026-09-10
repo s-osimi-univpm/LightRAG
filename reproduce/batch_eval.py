@@ -1,112 +1,88 @@
 import re
 import json
-import jsonlines
-
-from openai import OpenAI
+import requests
 
 
-def batch_eval(query_file, result1_file, result2_file, output_file_path):
-    client = OpenAI()
+def ollama_eval(prompt, model="gemma4:31b", host="http://localhost:11440"):
+    response = requests.post(
+        f"{host}/api/generate",
+        json={
+            "model": model,
+            "prompt": prompt,
+            "stream": False
+        }
+    )
+    return response.json()["response"]
 
-    with open(query_file, "r") as f:
-        data = f.read()
 
-    queries = re.findall(r"- Question \d+: (.+)", data)
+def batch_eval(result1_file, result2_file, output_file_path):
+    #with open(query_file, "r") as f:
+    #    data = f.read()
+
+    #queries = re.findall(r"- Question \d+: (.+)", data)
 
     with open(result1_file, "r") as f:
         answers1 = json.load(f)
+    queries = [i["query"] for i in answers1]
     answers1 = [i["result"] for i in answers1]
 
     with open(result2_file, "r") as f:
         answers2 = json.load(f)
     answers2 = [i["result"] for i in answers2]
 
-    requests = []
+    results = []
+
     for i, (query, answer1, answer2) in enumerate(zip(queries, answers1, answers2)):
-        sys_prompt = """
-        ---Role---
-        You are an expert tasked with evaluating two answers to the same question based on three criteria: **Comprehensiveness**, **Diversity**, and **Empowerment**.
-        """
+        print(f"Evaluating query {i+1}/{len(queries)}")
 
         prompt = f"""
-        You will evaluate two answers to the same question based on three criteria: **Comprehensiveness**, **Diversity**, and **Empowerment**.
+            You are an expert tasked with evaluating two answers to the same question based on three criteria: **Comprehensiveness**, **Diversity**, and **Empowerment**.
 
-        - **Comprehensiveness**: How much detail does the answer provide to cover all aspects and details of the question?
-        - **Diversity**: How varied and rich is the answer in providing different perspectives and insights on the question?
-        - **Empowerment**: How well does the answer help the reader understand and make informed judgments about the topic?
+            You will evaluate two answers to the same question based on these criteria:
 
-        For each criterion, choose the better answer (either Answer 1 or Answer 2) and explain why. Then, select an overall winner based on these three categories.
+            - Comprehensiveness: How much detail does the answer provide to cover all aspects of the question?
+            - Diversity: How varied and rich is the answer in providing different perspectives and insights on the question?
+            - Empowerment: How well does the answer help the reader understand and make informed judgments about the topic?
 
-        Here is the question:
-        {query}
+            Choose the better answer (Answer 1 or Answer 2) for each criterion and explain why. Then select an overall winner.
 
-        Here are the two answers:
+            Question:
+            {query}
 
-        **Answer 1:**
-        {answer1}
+            Answer 1:
+            {answer1}
 
-        **Answer 2:**
-        {answer2}
+            Answer 2:
+            {answer2}
 
-        Evaluate both answers using the three criteria listed above and provide detailed explanations for each criterion.
-
-        Output your evaluation in the following JSON format:
-
-        {{
-            "Comprehensiveness": {{
-                "Winner": "[Answer 1 or Answer 2]",
-                "Explanation": "[Provide explanation here]"
-            }},
-            "Diversity": {{
-                "Winner": "[Answer 1 or Answer 2]",
-                "Explanation": "[Provide explanation here]"
-            }},
-            "Empowerment": {{
-                "Winner": "[Answer 1 or Answer 2]",
-                "Explanation": "[Provide explanation here]"
-            }},
-            "Overall Winner": {{
-                "Winner": "[Answer 1 or Answer 2]",
-                "Explanation": "[Summarize why this answer is the overall winner based on the three criteria]"
+            Output JSON:
+            {{
+                "Comprehensiveness": {{"Winner": "...", "Explanation": "..."}},
+                "Diversity": {{"Winner": "...", "Explanation": "..."}},
+                "Empowerment": {{"Winner": "...", "Explanation": "..."}},
+                "Overall Winner": {{"Winner": "...", "Explanation": "..."}}
             }}
-        }}
-        """
+            """
 
-        request_data = {
-            "custom_id": f"request-{i + 1}",
-            "method": "POST",
-            "url": "/v1/chat/completions",
-            "body": {
-                "model": "gpt-4o-mini",
-                "messages": [
-                    {"role": "system", "content": sys_prompt},
-                    {"role": "user", "content": prompt},
-                ],
-            },
-        }
+        evaluation = ollama_eval(prompt)
 
-        requests.append(request_data)
+        results.append({
+            "query": query,
+            "evaluation": evaluation
+        })
 
-    with jsonlines.open(output_file_path, mode="w") as writer:
-        for request in requests:
-            writer.write(request)
+    with open(output_file_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=4, ensure_ascii=False)
 
-    print(f"Batch API requests written to {output_file_path}")
-
-    batch_input_file = client.files.create(
-        file=open(output_file_path, "rb"), purpose="batch"
-    )
-    batch_input_file_id = batch_input_file.id
-
-    batch = client.batches.create(
-        input_file_id=batch_input_file_id,
-        endpoint="/v1/chat/completions",
-        completion_window="24h",
-        metadata={"description": "nightly eval job"},
-    )
-
-    print(f"Batch {batch.id} has been created.")
+    print(f"Evaluation saved to {output_file_path}")
 
 
 if __name__ == "__main__":
-    batch_eval()
+    clses = ['mix']#["agriculture","legal"]
+
+    for cls in clses:
+        batch_eval(
+            f"reproduce/results/{cls}_hybrid_results.json",
+            f"reproduce/results/{cls}_naive_results.json",
+            f"reproduce/results/{cls}_evaluation.json",
+        )

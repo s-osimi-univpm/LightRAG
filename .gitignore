@@ -94,3 +94,13 @@ memory-bank
 
 # native_parser/docx CLI output (audit JSONL + image dir)
 /parse_output/
+
+# Reproduction datasets and full result dumps (kept locally only, not for upstream)
+/reproduce/dataset/
+/reproduce/results/
+/reproduce/results copy/
+/reproduce/results_oneBook_agriculture/
+/reproduce/_*
+/reproduce/*copy*
+/better_reproduce/dataset/
+/better_reproduce/results/
