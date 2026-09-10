@@ -1,4 +1,4 @@
-# better_reproduce: Script-by-Script Documentation
+# univpm_reproduce: Script-by-Script Documentation
 
 This folder contains a multi-step benchmark pipeline around LightRAG:
 
@@ -25,10 +25,10 @@ Top-level Python files documented here:
 
 Main data/result roots used by these scripts:
 
-- Input dataset contexts: `better_reproduce/dataset/unique_contexts/`
-- Step 1 outputs (indexing): `better_reproduce/results/1_indexing/`
-- Step 2 outputs (questions): `better_reproduce/results/2_questions/`
-- Step 3 outputs (RAG + eval): `better_reproduce/results/3_rag/`
+- Input dataset contexts: `univpm_reproduce/dataset/unique_contexts/`
+- Step 1 outputs (indexing): `univpm_reproduce/results/1_indexing/`
+- Step 2 outputs (questions): `univpm_reproduce/results/2_questions/`
+- Step 3 outputs (RAG + eval): `univpm_reproduce/results/3_rag/`
 
 ---
 
@@ -36,16 +36,16 @@ Main data/result roots used by these scripts:
 
 Typical execution order:
 
-1. `python better_reproduce/1_indexing.py`
-2. `python better_reproduce/2_questions.py`
-3. `python better_reproduce/3_RAG.py`
-4. `python better_reproduce/batch_eval_tie.py` (or `--no-tie`)
-5. Optional: `python better_reproduce/batch_eval.py`
-6. Optional: `python better_reproduce/check_reasoning_ollama.py --save-raw`
+1. `python univpm_reproduce/1_indexing.py`
+2. `python univpm_reproduce/2_questions.py`
+3. `python univpm_reproduce/3_RAG.py`
+4. `python univpm_reproduce/batch_eval_tie.py` (or `--no-tie`)
+5. Optional: `python univpm_reproduce/batch_eval.py`
+6. Optional: `python univpm_reproduce/check_reasoning_ollama.py --save-raw`
 
 Evaluate precomputed 3_RAG outputs directly with RAGAS (without calling API again):
 
-`python better_reproduce/eval_rag_quality_from_3_rag.py --rag-results better_reproduce/results/3_rag/<run_folder>/rag_results.json --mode hybrid`
+`python univpm_reproduce/eval_rag_quality_from_3_rag.py --rag-results univpm_reproduce/results/3_rag/<run_folder>/rag_results.json --mode hybrid`
 
 Each step writes its own constants snapshot (`constants.txt`) into that step's output directory for reproducibility.
 
@@ -58,7 +58,7 @@ Builds LightRAG stores from dataset context JSON files. This is the ingestion an
 
 ### Inputs
 - Per dataset input file:
-  - `better_reproduce/dataset/unique_contexts/{dataset}_unique_contexts.json`
+  - `univpm_reproduce/dataset/unique_contexts/{dataset}_unique_contexts.json`
 - Default datasets:
   - `agriculture`, `legal`, `mix`
 
@@ -81,7 +81,7 @@ Expected input shape: a JSON list of strings (unique context passages).
 
 ### Outputs
 Per dataset output directory:
-- `better_reproduce/results/1_indexing/{dataset}_{EXPERIMENT_NAME}/`
+- `univpm_reproduce/results/1_indexing/{dataset}_{EXPERIMENT_NAME}/`
 
 Generated files include LightRAG stores such as:
 - `kv_store_text_chunks.json`
@@ -111,7 +111,7 @@ Generates synthetic benchmark queries from indexed chunks:
 
 ### Inputs
 - Step 1 chunk store:
-  - `better_reproduce/results/1_indexing/{dataset}_{STEP_1_EXPERIMENT_NAME}/kv_store_text_chunks.json`
+  - `univpm_reproduce/results/1_indexing/{dataset}_{STEP_1_EXPERIMENT_NAME}/kv_store_text_chunks.json`
 
 ### Core Behavior
 1. Loads chunk store and filters short chunks (`MIN_CHUNK_CHARS`).
@@ -144,7 +144,7 @@ Top-level output includes per user:
 
 ### Outputs
 Per dataset output directory:
-- `better_reproduce/results/2_questions/{dataset}_{EXPERIMENT_NAME}/`
+- `univpm_reproduce/results/2_questions/{dataset}_{EXPERIMENT_NAME}/`
 
 Files:
 - `questions.json`: full structured generation output
@@ -198,7 +198,7 @@ Runtime parameters can be overridden with env vars:
 
 ### Outputs
 Per dataset output directory:
-- `better_reproduce/results/3_rag/{dataset}_{EXPERIMENT_NAME}/`
+- `univpm_reproduce/results/3_rag/{dataset}_{EXPERIMENT_NAME}/`
 
 Files:
 - `rag_results.json`: all successful query results across modes
@@ -225,7 +225,7 @@ By default compares:
 - `MODE_2 = naive`
 
 ### Inputs
-- `better_reproduce/results/3_rag/{dataset}_{EXPERIMENT_NAME}/rag_results.json`
+- `univpm_reproduce/results/3_rag/{dataset}_{EXPERIMENT_NAME}/rag_results.json`
 
 ### Core Behavior
 1. Splits rows by mode and pairs them by index.
@@ -355,12 +355,12 @@ Shared helpers used by step scripts.
 From repo root:
 
 ```bash
-python better_reproduce/1_indexing.py
-python better_reproduce/2_questions.py
-python better_reproduce/3_RAG.py
-python better_reproduce/batch_eval_tie.py
-python better_reproduce/batch_eval_tie.py --no-tie
-python better_reproduce/check_reasoning_ollama.py --save-raw
+python univpm_reproduce/1_indexing.py
+python univpm_reproduce/2_questions.py
+python univpm_reproduce/3_RAG.py
+python univpm_reproduce/batch_eval_tie.py
+python univpm_reproduce/batch_eval_tie.py --no-tie
+python univpm_reproduce/check_reasoning_ollama.py --save-raw
 ```
 
-If running from inside `better_reproduce/`, adjust paths accordingly.
+If running from inside `univpm_reproduce/`, adjust paths accordingly.

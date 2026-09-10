@@ -16,7 +16,7 @@ OLLAMA_HOST = "http://localhost:11440"
 MODEL = "gemma4:e4b-it-q4_K_M"
 PROMPT = "Briefly answer: what is 37 * 29? Also include one sentence explaining your method."
 TIMEOUT_SECONDS = 300
-AUDIT_DIR = Path("better_reproduce/results/reasoning_audit")
+AUDIT_DIR = Path("univpm_reproduce/results/reasoning_audit")
 RUN_THINK_TRUE = True
 RUN_THINK_FALSE = True
 

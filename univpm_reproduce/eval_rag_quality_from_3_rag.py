@@ -2,7 +2,7 @@
 """Evaluate precomputed 3_RAG results with RAGAS metrics.
 
 This script reads entries from:
-  better_reproduce/results/3_rag/<run_folder>/rag_results.json
+  univpm_reproduce/results/3_rag/<run_folder>/rag_results.json
 
 and evaluates each (question, answer, contexts, ground_truth) tuple directly,
 without calling LightRAG API again.

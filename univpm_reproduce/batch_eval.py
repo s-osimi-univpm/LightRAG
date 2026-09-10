@@ -12,7 +12,7 @@ try:
         is_event_loop_binding_error,
         instructor,
     )
-except ImportError:  # Support direct execution: python better_reproduce/batch_eval.py
+except ImportError:  # Support direct execution: python univpm_reproduce/batch_eval.py
     from batch_eval_tie import (
         BaseModel,
         Field,

@@ -32,7 +32,7 @@ EVAL_MODEL = "gemma4:31b"
 REQUEST_TIMEOUT_SECONDS = 1200
 OLLAMA_API_KEY = "ollama"
 
-# Embedding strategy aligned with better_reproduce/1_indexing.py:
+# Embedding strategy aligned with univpm_reproduce/1_indexing.py:
 # local SentenceTransformer model on a configured device.
 EVAL_EMBEDDING_MODEL = os.getenv("RAGAS_EVAL_EMBEDDING_MODEL", "BAAI/bge-m3")
 EVAL_EMBEDDING_DEVICE = os.getenv("RAGAS_EVAL_EMBEDDING_DEVICE", "cuda:1")

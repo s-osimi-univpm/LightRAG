@@ -102,5 +102,5 @@ memory-bank
 /reproduce/results_oneBook_agriculture/
 /reproduce/_*
 /reproduce/*copy*
-/better_reproduce/dataset/
-/better_reproduce/results/
+/univpm_reproduce/dataset/
+/univpm_reproduce/results/
