@@ -1,0 +1,23 @@
+{
+  "dataset_name": "agriculture",
+  "modes": {
+    "hybrid": {
+      "count": 125,
+      "faithfulness_avg": 0.8889800805910337,
+      "context_relevance_avg": 0.558,
+      "response_relevance_avg": 0.8239469577088306
+    },
+    "naive": {
+      "count": 125,
+      "faithfulness_avg": 0.9941640961377803,
+      "context_relevance_avg": 0.588,
+      "response_relevance_avg": 0.8246620589665331
+    },
+    "mix": {
+      "count": 125,
+      "faithfulness_avg": 0.8769862537988475,
+      "context_relevance_avg": 0.556,
+      "response_relevance_avg": 0.8404877987450112
+    }
+  }
+}

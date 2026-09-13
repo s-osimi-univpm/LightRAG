@@ -1,0 +1,46 @@
+{
+  "total_questions": 125,
+  "no_context": {
+    "answer_1": 1,
+    "answer_2": 37,
+    "both": 1,
+    "either": 36,
+    "neither": 88
+  },
+  "winner_label_mapping": {
+    "Answer 1": "naive",
+    "Answer 2": "hybrid"
+  },
+  "winners": {
+    "Comprehensiveness": {
+      "Answer 1": 107,
+      "Answer 2": 18
+    },
+    "Diversity": {
+      "Answer 1": 98,
+      "Answer 2": 27
+    },
+    "Empowerment": {
+      "Answer 1": 104,
+      "Answer 2": 21
+    },
+    "Overall Winner": {
+      "Answer 1": 104,
+      "Answer 2": 21
+    }
+  },
+  "mode_top3_supporting_chunk_stats": {
+    "naive": {
+      "count": 125,
+      "top3_supporting_chunk_count_avg": 1.28,
+      "top3_supporting_chunk_hit_count_avg": 1.232,
+      "top3_supporting_chunk_coverage_avg": 0.972
+    },
+    "hybrid": {
+      "count": 125,
+      "top3_supporting_chunk_count_avg": 1.28,
+      "top3_supporting_chunk_hit_count_avg": 1.264,
+      "top3_supporting_chunk_coverage_avg": 0.988
+    }
+  }
+}

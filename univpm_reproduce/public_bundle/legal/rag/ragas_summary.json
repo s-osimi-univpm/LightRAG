@@ -1,0 +1,23 @@
+{
+  "dataset_name": "legal",
+  "modes": {
+    "hybrid": {
+      "count": 125,
+      "faithfulness_avg": 0.8291302790776474,
+      "context_relevance_avg": 0.256,
+      "response_relevance_avg": 0.4711200404345377
+    },
+    "naive": {
+      "count": 125,
+      "faithfulness_avg": 0.9896021021021021,
+      "context_relevance_avg": 0.224,
+      "response_relevance_avg": 0.4282311441265088
+    },
+    "mix": {
+      "count": 125,
+      "faithfulness_avg": 0.828634481352508,
+      "context_relevance_avg": 0.24,
+      "response_relevance_avg": 0.4789409278023194
+    }
+  }
+}

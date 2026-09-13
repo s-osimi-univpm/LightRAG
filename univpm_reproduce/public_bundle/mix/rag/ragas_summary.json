@@ -1,0 +1,23 @@
+{
+  "dataset_name": "mix",
+  "modes": {
+    "hybrid": {
+      "count": 125,
+      "faithfulness_avg": 0.21266666666666667,
+      "context_relevance_avg": 0.0,
+      "response_relevance_avg": 0.6297670412269982
+    },
+    "naive": {
+      "count": 125,
+      "faithfulness_avg": 0.9888233918128656,
+      "context_relevance_avg": 0.75,
+      "response_relevance_avg": 0.8892022717139157
+    },
+    "mix": {
+      "count": 125,
+      "faithfulness_avg": 0.9765614090210865,
+      "context_relevance_avg": 0.758,
+      "response_relevance_avg": 0.8941784762593126
+    }
+  }
+}

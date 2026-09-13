@@ -105,4 +105,7 @@ memory-bank
 /univpm_reproduce/dataset/
 /univpm_reproduce/results/
 /univpm_reproduce/public_bundle/*/indexing/
-/univpm_reproduce/public_bundle/*/rag/
+/univpm_reproduce/public_bundle/*/rag/*
+!/univpm_reproduce/public_bundle/*/rag/summary_naive_hybrid.json
+!/univpm_reproduce/public_bundle/*/rag/summary_naive_mix.json
+!/univpm_reproduce/public_bundle/*/rag/ragas_summary.json
