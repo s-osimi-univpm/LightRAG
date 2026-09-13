@@ -18,7 +18,7 @@ except ImportError:
 # =========================
 # Experiment constants
 # =========================
-EXPERIMENT_NAME = "gemma31b_no_reason"
+EXPERIMENT_NAME = "gemma31b"
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_DIR = BASE_DIR / "dataset" / "unique_contexts"

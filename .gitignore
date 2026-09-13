@@ -104,3 +104,5 @@ memory-bank
 /reproduce/*copy*
 /univpm_reproduce/dataset/
 /univpm_reproduce/results/
+/univpm_reproduce/public_bundle/*/indexing/
+/univpm_reproduce/public_bundle/*/rag/

@@ -1,0 +1,49 @@
+BASE_DIR=/raid/users/sosimi/py_projects/LightRAG/univpm_reproduce
+CHUNKS_PER_DATASET=15
+DATASET_NAMES=['agriculture', 'legal', 'mix']
+EXPERIMENT_NAME=gemma31b_no_reason
+LLM=gemma4:31b
+LLM_TEMPERATURE=0.7
+MAX_GENERATION_RETRIES=4
+MAX_OUTPUT_TOKENS=12288
+MIN_CHUNK_CHARS=200
+NUM_CTX=32768
+NUM_USERS=5
+OLLAMA_API_KEY=ollama
+OLLAMA_HOST=http://localhost:11440
+OUTPUT_FILE_NAME=questions.json
+OUTPUT_METADATA_FILE_NAME=chunk_samples.json
+QUESTIONS_PER_TASK=5
+RANDOM_SEED=42
+REQUEST_TIMEOUT_SECONDS=1001
+RESULT_ROOT_DIR=/raid/users/sosimi/py_projects/LightRAG/univpm_reproduce/results/2_questions
+SIMPLE_USER_TASKS_QUESTIONS_PROMPT=Given the following dataset description:
+
+{total_description}
+
+Create exactly 1 user persona who would engage with this dataset.
+For that user, create exactly {tasks_per_user} realistic tasks.
+For each task, create exactly {questions_per_task} high-level, non-trivial questions that
+require understanding the provided dataset description.
+
+Important style constraints for each question:
+- Write each question as if asked by a naive end user who has NOT seen the source chunks.
+- Do NOT mention chunks, chunk IDs, sections, documents, file paths, or "the provided context".
+- Do NOT cite or quote source text directly.
+- Questions should sound natural and practical for the persona/task.
+
+For every generated question, also provide top_supporting_chunk_ids:
+- Include 1 to 3 chunk IDs that most strongly support why this question is relevant.
+- Rank them from most relevant to less relevant.
+- Use only IDs from this allowed set:
+{allowed_chunk_ids}
+
+For every generated question, also provide reference_answer:
+- Write a concise, high-quality answer grounded in the dataset description.
+- This will be used as ground-truth style reference text for RAG evaluation.
+- Do NOT mention chunks, chunk IDs, sections, documents, file paths, or "the provided context".
+STEP_1_EXPERIMENT_NAME=gemma31b_no_reason
+STEP_1_RESULTS_DIR=/raid/users/sosimi/py_projects/LightRAG/univpm_reproduce/results/1_indexing
+TASKS_PER_USER=5
+USER_CHUNK_POOL_FRACTION=0.2
+VERBOSE_DEBUG=False

@@ -43,13 +43,12 @@ LLM_TEMPERATURE = 0.2
 INPUT_RAG_RESULTS_FILE_NAME = "rag_results.json"
 RAG_RUN_SUMMARY_FILE_NAME = "rag_run_summary.json"
 QUESTIONS_FILE_NAME = "questions.json"
-OUTPUT_EVALUATION_NO_TIE_FILE_NAME = "evaluation_no_tie.json"
-OUTPUT_SUMMARY_NO_TIE_FILE_NAME = "summary_no_tie.json"
-# Filenames for additional pairwise comparisons involving MODE_3
-OUTPUT_EVALUATION_NO_TIE_FILE_NAME_M1_M3 = "evaluation_no_tie_m1_m3.json"
-OUTPUT_SUMMARY_NO_TIE_FILE_NAME_M1_M3 = "summary_no_tie_m1_m3.json"
-OUTPUT_EVALUATION_NO_TIE_FILE_NAME_M2_M3 = "evaluation_no_tie_m2_m3.json"
-OUTPUT_SUMMARY_NO_TIE_FILE_NAME_M2_M3 = "summary_no_tie_m2_m3.json"
+# Primary no-tie comparison: naive vs hybrid, matching the default pair in this script.
+OUTPUT_EVALUATION_FILE_NAME = "evaluation_naive_hybrid.json"
+OUTPUT_SUMMARY_FILE_NAME = "summary_naive_hybrid.json"
+# Additional no-tie comparison: naive vs mix.
+OUTPUT_EVALUATION_NAIVE_MIX_FILE_NAME = "evaluation_naive_mix.json"
+OUTPUT_SUMMARY_NAIVE_MIX_FILE_NAME = "summary_naive_mix.json"
 RESUME_FROM_EXISTING_EVAL = True
 
 MODE_1 = "hybrid"
@@ -141,11 +140,11 @@ def rag_results_file(dataset_name: str) -> Path:
     return run_folder(dataset_name) / INPUT_RAG_RESULTS_FILE_NAME
 
 
-def output_eval_file(dataset_name: str, filename: str = OUTPUT_EVALUATION_NO_TIE_FILE_NAME) -> Path:
+def output_eval_file(dataset_name: str, filename: str = OUTPUT_EVALUATION_FILE_NAME) -> Path:
     return run_folder(dataset_name) / filename
 
 
-def output_summary_file(dataset_name: str, filename: str = OUTPUT_SUMMARY_NO_TIE_FILE_NAME) -> Path:
+def output_summary_file(dataset_name: str, filename: str = OUTPUT_SUMMARY_FILE_NAME) -> Path:
     return run_folder(dataset_name) / filename
 
 
@@ -600,10 +599,10 @@ def save_progress(
 
 def evaluate_dataset_no_tie(
     dataset_name: str,
-    mode_a: str = MODE_1,
-    mode_b: str = MODE_2,
-    eval_filename: str = OUTPUT_EVALUATION_NO_TIE_FILE_NAME,
-    summary_filename: str = OUTPUT_SUMMARY_NO_TIE_FILE_NAME,
+    mode_a: str = MODE_2,
+    mode_b: str = MODE_1,
+    eval_filename: str = OUTPUT_EVALUATION_FILE_NAME,
+    summary_filename: str = OUTPUT_SUMMARY_FILE_NAME,
 ) -> None:
     pairs = load_query_pairs_from_rag_results(rag_results_file(dataset_name), dataset_name, mode_a, mode_b)
     client = build_instructor_client()
@@ -717,8 +716,8 @@ def main() -> None:
             dataset_name,
             mode_a=MODE_2,
             mode_b=MODE_3,
-            eval_filename=OUTPUT_EVALUATION_NO_TIE_FILE_NAME_M2_M3,
-            summary_filename=OUTPUT_SUMMARY_NO_TIE_FILE_NAME_M2_M3,
+            eval_filename=OUTPUT_EVALUATION_NAIVE_MIX_FILE_NAME,
+            summary_filename=OUTPUT_SUMMARY_NAIVE_MIX_FILE_NAME,
         )
 
 

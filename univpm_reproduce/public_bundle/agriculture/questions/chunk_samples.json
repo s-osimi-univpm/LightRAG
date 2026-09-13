@@ -1,0 +1,13 @@
+{
+  "dataset_name": "agriculture",
+  "random_seed": 42,
+  "step_1_experiment_name": "gemma31b_no_reason",
+  "chunk_store": "/raid/users/sosimi/py_projects/LightRAG/univpm_reproduce/results/1_indexing/agriculture_gemma31b_no_reason/kv_store_text_chunks.json",
+  "chunks_per_dataset": 15,
+  "sampling_mode": "per_user_seeded_consecutive_window",
+  "user_chunk_pool_fraction": 0.2,
+  "num_users": 5,
+  "tasks_per_user": 5,
+  "questions_per_task": 5,
+  "generation_mode": "single_call_user_tasks_questions_with_chunk_grounding"
+}
